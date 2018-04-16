@@ -10,7 +10,7 @@ namespace KnowledgeTreeAPI.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Ez a zóvoda...:D";
+            ViewBag.Title = "TreeOfScience";
             return View();
         }
     }

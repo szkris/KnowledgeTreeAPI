@@ -16,23 +16,31 @@ namespace KnowledgeTreeAPI.Controllers
     public class SelectController : ApiController
     {
         private OServer Server = Models.Server.Connect();
-        private ODatabase Database = new ODatabase("localhost", 2424, "TOSDB", ODatabaseType.Graph, "admin", "admin");
+        private ODatabase Database = new ODatabase("localhost", 2424, "TreeOfScience", ODatabaseType.Graph, "admin", "admin");
 
         // GET: api/Select
-        public IEnumerable<string> Get()
-        {
-            return new string[] {"Elérhető vagyok kívülről! :)"};
-        }
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] {"Elérhető vagyok kívülről! :)"};
+        //}
 
-      /*  // GET: api/Select/5
+         // GET: api/Select/year/2010
         [HttpGet]
         [Route("api/Select/year")]
-        public IEnumerable<string> Get(int year)
+        public OSqlSelect Get(int year)
         {
             var select = Database.Select().From("Document").Where("year").Equals(year);
             return select;
         }
-        */
+        
+        // GET - TEST
+        [HttpGet]
+        [Route("api/Select/gettest")]
+        public List<ODocument> Get()
+        {
+            List<ODocument> entries = Database.Select().From("Document").Limit(50).Where("year").Like(1965).ToList();
+            return entries;
+        }
 
         // POST: api/Select
         public QueryResult Post([FromBody]QueryData data)
