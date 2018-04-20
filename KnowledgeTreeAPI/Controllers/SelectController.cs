@@ -24,13 +24,12 @@ namespace KnowledgeTreeAPI.Controllers
         //    return new string[] {"Elérhető vagyok kívülről! :)"};
         //}
 
-         // GET: api/Select/year/2010
+        // GET: api/Select/id/53e99784b7602d9701f3e130
         [HttpGet]
-        [Route("api/Select/year")]
-        public OSqlSelect Get(int year)
+        [Route("api/Select/id/{id}")]
+        public List<ODocument> Get(string id)
         {
-            var select = Database.Select().From("Document").Where("year").Equals(year);
-            return select;
+            return Database.Select().From("Document").Where("aminer_id").Like(id).ToList();
         }
         
         // GET - TEST
@@ -39,6 +38,15 @@ namespace KnowledgeTreeAPI.Controllers
         public List<ODocument> Get()
         {
             List<ODocument> entries = Database.Select().From("Document").Limit(50).Where("year").Like(1965).ToList();
+            return entries;
+        }
+
+        // GET: api/Select/5before/1000
+        [HttpGet]
+        [Route("api/Select/5before/{before}")]
+        public List<ODocument> GetBeforeNum(int before)
+        {
+            List<ODocument> entries = Database.Select().From("Document").Skip(before).Limit(5).ToList();
             return entries;
         }
 
