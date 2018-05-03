@@ -19,7 +19,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>true</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -240,11 +241,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AminerVertex.cs" />
+    <Compile Include="Models\a_b_type\Author.cs" />
+    <Compile Include="Models\a_b_type\Citation.cs" />
+    <Compile Include="Models\a_b_type\Document_data.cs" />
+    <Compile Include="Models\a_b_type\Document_reference.cs" />
+    <Compile Include="Models\a_b_type\Fos.cs" />
+    <Compile Include="Models\a_b_type\Keyword.cs" />
     <Compile Include="Models\AuthorData.cs" />
-    <Compile Include="Models\MagVertex.cs" />
-    <Compile Include="Models\QueryResult.cs" />
-    <Compile Include="Models\QueryData.cs" />
     <Compile Include="Models\SelectClause.cs" />
     <Compile Include="Models\Server.cs" />
     <Compile Include="Models\Vertex.cs" />
