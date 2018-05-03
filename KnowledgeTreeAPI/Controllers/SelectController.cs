@@ -42,6 +42,7 @@ namespace KnowledgeTreeAPI.Controllers
             return results;
         }
 
+
         // GET: api/Select/author/Smith
         [HttpGet]
         [Route("api/Select/author/{authorName}")]
@@ -81,21 +82,54 @@ namespace KnowledgeTreeAPI.Controllers
             return results;
         }
 
+        // Szelekció úgy, hogy nem kell tudnunk, hogy amire keresünk az keyword, vagy author, vagy más...
+        // GET: api/Select/any/Smith ||  api/Select/any/security
+        [HttpGet]
+        [Route("api/Select/any/{anything}")]
+        public List<ODocument> GetByAnything(String anything)
+        {
+            List<ODocument> result = TraverseByName("b_type_node", anything);
+            result.RemoveAt(0);
+            List<String> documentRefs = AddIds(result);
+            List<ODocument> results = Database.Select().From("document_data").Where("id").In<String>(documentRefs).ToList();
+            Database.Close();
+            return results;
+        }
+
         // GET: api/Select/id/53e99784b7602d9701f3e482
         [HttpGet]
         [Route("api/Select/id/{id}")]
         public List<ODocument> GetById(String id)
         {
-            return Database.Select().From("document_data").Where("id").Equals<String>(id).ToList();
+            List<ODocument> results = Database.Select().From("document_data").Where("id").Equals<String>(id).ToList();
+            Database.Close();
+            return results;
         }
 
-        // GET: api/Select/datareference/fromcomponent/5
+        // GET: api/Select/documentreference/fromcomponent/5
         [HttpGet]
-        [Route("api/Select/datareference/fromcomponent/{componentNumber}")]
-        public List<ODocument> GetDataReferenceFromComponent(int componentNumber)
+        [Route("api/Select/documentreference/fromcomponent/{componentNumber}")]
+        public List<ODocument> GetDocumentReferenceFromComponent(int componentNumber)
         {
-            return Database.Select().From("document_reference").Where("component").Equals<int>(componentNumber).ToList();
+            List<ODocument> results = Database.Select().From("document_reference").Where("component").Equals<int>(componentNumber).ToList();
+            Database.Close();
+            return results;
         }
+
+        // GET: api/Select/documentdata/fromcomponent/5
+        [HttpGet]
+        [Route("api/Select/documentdata/fromcomponent/{componentNumber}")]
+        public List<ODocument> GetDocumentDataFromComponent(int componentNumber)
+        {
+            List<ODocument> componentResult = Database.Select().From("document_reference").Where("component").Equals<int>(componentNumber).ToList();
+            componentResult.RemoveAt(0);
+            List<String> documentRefs = AddIds(componentResult);
+            List<ODocument> results = Database.Select().From("document_data").Where("id").In<String>(documentRefs).ToList();
+            Database.Close();
+            return results;
+        }
+
+
 
         public List<ODocument> TraverseByName(String name, String attributeName)
         {
