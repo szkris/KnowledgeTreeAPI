@@ -200,7 +200,7 @@ namespace KnowledgeTreeAPI.Controllers
                 Database.SqlBatch(batch).Run();
                 builder.Append("BEGIN;\n");
             }
-            catch (System.IO.IOException e)
+            catch (IOException e)
             {
                 return new HttpResponseMessage(HttpStatusCode.GatewayTimeout);
             }

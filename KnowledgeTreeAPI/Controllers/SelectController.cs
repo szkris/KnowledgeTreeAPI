@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using KnowledgeTreeAPI.Models.a_b_type;
+using System.Net.Http;
+using System.Net;
 
 // With this controller the API can select records from the database by certain arguments (e.g. by keyword or by author name).
 
@@ -93,11 +95,22 @@ namespace KnowledgeTreeAPI.Controllers
         // GET: api/Select/id/53e99784b7602d9701f3e482
         [HttpGet]
         [Route("api/Select/id/{id}")]
-        public List<ODocument> GetById(String id)
+        public HttpResponseMessage GetById(String id)
         {
-            List<ODocument> results = Database.Select().From("document_data").Where("id").Equals<String>(id).ToList();
-            Database.Close();
-            return results;
+            try
+            {
+                List<ODocument> results = Database.Select().From("document_data").Where("id").Equals<String>(id).ToList();
+                Database.Close();
+                if(results.Count == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, results);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         // GET: api/Select/documentreference/fromcomponent/5
