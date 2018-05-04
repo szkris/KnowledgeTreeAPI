@@ -7,7 +7,7 @@ namespace KnowledgeTreeAPI.Models
 {
     public class AuthorData
     {
-        private string name { get; set; }
-        private string org { get; set; }
+        public string name { get; set; }
+        public string org { get; set; }
     }
 }

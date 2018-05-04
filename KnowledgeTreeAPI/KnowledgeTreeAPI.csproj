@@ -248,6 +248,7 @@
     <Compile Include="Models\a_b_type\Fos.cs" />
     <Compile Include="Models\a_b_type\Keyword.cs" />
     <Compile Include="Models\AuthorData.cs" />
+    <Compile Include="Models\Query.cs" />
     <Compile Include="Models\SelectClause.cs" />
     <Compile Include="Models\Server.cs" />
     <Compile Include="Models\Vertex.cs" />

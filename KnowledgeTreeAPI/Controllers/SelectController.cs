@@ -1,13 +1,7 @@
-﻿using KnowledgeTreeAPI.Models;
-using Orient.Client;
+﻿using Orient.Client;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Web.Http;
-using Newtonsoft.Json;
 using KnowledgeTreeAPI.Models.a_b_type;
 
 // With this controller the API can select records from the database by certain arguments (e.g. by keyword or by author name).
@@ -122,7 +116,7 @@ namespace KnowledgeTreeAPI.Controllers
         public List<ODocument> GetDocumentDataFromComponent(int componentNumber)
         {
             List<ODocument> componentResult = Database.Select().From("document_reference").Where("component").Equals<int>(componentNumber).ToList();
-            componentResult.RemoveAt(0);
+            //componentResult.RemoveAt(0);
             List<String> documentRefs = AddIds(componentResult);
             List<ODocument> results = Database.Select().From("document_data").Where("id").In<String>(documentRefs).ToList();
             Database.Close();
